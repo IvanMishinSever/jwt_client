@@ -1,0 +1,19 @@
+.Login {
+    display: block;
+    justify-content: center;
+    align-items: center;
+   /* padding: 1.5rem;*/
+
+    position: absolute;
+    top:  50px;
+    right: 100px;
+    width: 300px;
+    height: 300px;
+    z-index: 5;
+    background-color: rgba(154, 173, 209, 0.678);
+
+   
+   /*flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;*/
+}
