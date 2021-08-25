@@ -16,4 +16,11 @@
    /*flex-wrap: wrap;
     justify-content: center;
     align-items: center;*/
+    
+}
+#error {
+    color: red;
+}
+#message {
+    color: rgb(52, 207, 38);
 }
