@@ -3,6 +3,7 @@ import './Main.css';
 import Registration from "../Authorization/Registration/Registration";
 import Login from "../Authorization/Login/Login";
 import MainData from "./MainData/MainData";
+import Activation from "../Authorization/Activation/Activation";
 import {openRegistrationForm, openLoginForm} from '../Authorization/authSlice';
 
 const Main = (props) => {
@@ -23,6 +24,15 @@ const Main = (props) => {
 const renderLogin = () => {
   return (
   <Login 
+    dispatch={dispatch}
+    userData={props.userData}
+    />
+  );
+};
+//LACTIVATION COMPONENT
+const renderActivation = () => {
+  return (
+  <Activation 
     dispatch={dispatch}
     userData={props.userData}
     />
@@ -54,6 +64,9 @@ const renderMainView = () => {
   if (props.userData.openLoginForm === true) {
     return renderLogin();
 }
+  if (props.userData.openActivationForm === true) {
+    return renderActivation();
+  }
   
   
       return renderMainView();

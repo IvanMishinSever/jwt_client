@@ -44,6 +44,7 @@ const options ={
         role:'',
         openRegistrationForm: false,
         openLoginForm: false,
+        openActivationForm: false,
         errorMessage:'',
         errorMessageEmail:'',
         errorMessagePassword:'',
@@ -57,6 +58,10 @@ const options ={
         },
         closeRegistrationForm: (state,action) => {
             state.openRegistrationForm = false;
+            state.errorMessage = "";
+            state.errorMessageEmail = "";
+            state.errorMessagePassword = "";
+
         },
         closeLoginForm: (state,action) => {
             state.openLoginForm = false;
@@ -69,14 +74,21 @@ const options ={
         },
         validateErrorPassword: (state, action) => {
             state.errorMessagePassword = action.payload;
+        },
+        closeActivationForm: (state,action) => {
+            state.openActivationForm = false;
+        },
+        clearErrorMessages: (state,action) => {
+            state.errorMessage = "";
+           // state.errorMessageEmail = "";
+           // state.errorMessagePassword = "";
         }
-
     },
     extraReducers: {
     [registerUser.pending]: (state, action) => {
         state.isFetching = true;
         state.error = false;
-        state.userMessage = 'Пожалуйста, ждите...';
+        state.userMessage = 'Загрузка...';
         
     },
     [registerUser.fulfilled]: (state, action) => {
@@ -94,6 +106,8 @@ const options ={
             state.id = action.payload.id;
             state.openRegistrationForm = false;
             state.userMessage ='';
+           // state.openActivationForm = true;
+
         }
        
     },
@@ -112,5 +126,7 @@ const options ={
 export const authSlice = createSlice(options);
 export const {openRegistrationForm, closeRegistrationForm,
     activeLoginForm, validateErrorPassword, 
-    validateErrorEmail, openLoginForm, closeLoginForm} = authSlice.actions;
+    validateErrorEmail, openLoginForm, closeLoginForm, 
+    clearErrorMessages, closeActivationForm} = authSlice.actions;
 export default authSlice.reducer;
+                                                                          

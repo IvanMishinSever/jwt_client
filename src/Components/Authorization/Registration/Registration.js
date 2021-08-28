@@ -1,5 +1,6 @@
 import React from 'react';
-import { closeRegistrationForm, registerUser, validateErrorPassword, validateErrorEmail } from '../authSlice';
+import { closeRegistrationForm, registerUser, validateErrorPassword, 
+   clearErrorMessages, validateErrorEmail } from '../authSlice';
 import './Registration.css';
 import  {validatePassword, validateEmail }  from '../../../helper/validation';
 
@@ -44,6 +45,7 @@ handleUserInputMail(e) {
     const {dispatch} = this.props;
     const message = validateEmail(e.target.value);
     dispatch(validateErrorEmail(message));
+    dispatch(clearErrorMessages());
     
     this.setState({
         userInputMail: e.target.value
@@ -53,6 +55,7 @@ handleUserInputPassword(e) {
     const {dispatch} = this.props;
     const message = validatePassword(e.target.value);
     dispatch(validateErrorPassword(message));
+    dispatch(clearErrorMessages());
 
     this.setState({
         userInputPassword: e.target.value,
@@ -63,7 +66,10 @@ handleUserInputPassword(e) {
     render() {
         let style;
             
-        if (!this.props.userData.errorMessage && !this.props.userData.errorMessageEmail && !this.props.userData.errorMessagePassword) {
+        if (/*!this.props.userData.errorMessage 
+            &&*/ !this.props.userData.errorMessageEmail 
+            && !this.props.userData.errorMessagePassword
+            && this.state.userInputMail && this.state.userInputPassword) {
           
                 style = ''
             } else {

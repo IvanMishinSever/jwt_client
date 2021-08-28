@@ -60,8 +60,10 @@ handleUserInputPassword(e) {
 }        
     render() {
         let style;
-            
-        if (!this.props.userData.errorMessage && !this.props.userData.errorMessageEmail && !this.props.userData.errorMessagePassword) {
+        if (!this.props.userData.errorMessage 
+            && !this.props.userData.errorMessageEmail 
+            && !this.props.userData.errorMessagePassword
+            && this.state.userInputMail && this.state.userInputPassword) {
           
                 style = ''
             } else {
@@ -80,7 +82,7 @@ handleUserInputPassword(e) {
                 <input type='password' id="password" placeholder="Пароль" required minLength ="5" 
                 value={this.state.userInputPassword} onChange={this.handleUserInputPassword}/>
                 <p id="error">{this.props.userData.errorMessagePassword}</p>
-                <button  onClick={this.onSend} disabled={style}>Вход</button>
+                <button  onClick={this.onSend} disabled={{style:'disabled'}}>Вход</button>
                 <a href="#">Забыли аккаунт?</a>
                 <span>или</span>
                 <button>Создать аккаунт</button>
