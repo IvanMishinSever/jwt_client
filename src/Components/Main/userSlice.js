@@ -1,4 +1,4 @@
-import { AsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
 const options ={
     name: 'user',
     initialState: {

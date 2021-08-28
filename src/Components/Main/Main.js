@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import './Main.css';
 import Registration from "../Authorization/Registration/Registration";
 import Login from "../Authorization/Login/Login";
 import MainData from "./MainData/MainData";
-import {openRegistrationForm} from '../Authorization/authSlice';
+import {openRegistrationForm, openLoginForm} from '../Authorization/authSlice';
 
 const Main = (props) => {
   const {dispatch} = props;
@@ -19,17 +19,26 @@ const Main = (props) => {
     );
   };
 
+//LOGIN COMPONENT
+const renderLogin = () => {
+  return (
+  <Login 
+    dispatch={dispatch}
+    userData={props.userData}
+    />
+  );
+};
 // MAIN VIEW RENDER
 const renderMainView = () => {
   return (
   <div className="Main">
+    <button onClick = {() => dispatch(openLoginForm())}>Логин</button>
     <button onClick = {() => dispatch(openRegistrationForm())}>Регистрация</button>
     <p> HELLO </p>
-    <Login 
-    dispatch={dispatch}
-    />
+   
     <MainData 
     dispatch={dispatch}
+    userData={props.userData}
     />
  </div>
 
@@ -37,12 +46,23 @@ const renderMainView = () => {
 };
 
 //RENDER
-  if (props.userData.openRegistrationForm === false) {
-      return renderMainView();
-  } else {
+
+
+  if (props.userData.openRegistrationForm === true) {
       return renderRegistration();
   }
-   
+  if (props.userData.openLoginForm === true) {
+    return renderLogin();
+}
+  
+  
+      return renderMainView();
+
+  
+ 
+ 
+ 
+  
 }
   
   export default Main;

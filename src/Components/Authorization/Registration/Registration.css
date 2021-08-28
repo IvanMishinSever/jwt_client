@@ -24,3 +24,14 @@
 #message {
     color: rgb(52, 207, 38);
 }
+
+input:focus:required:invalid {
+    border-color:red;
+    color: red;
+    box-shadow: none;
+}
+input:focus:required:valid {
+    border-color: green;
+    color: green;
+    box-shadow: none;
+}

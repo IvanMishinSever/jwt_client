@@ -20,7 +20,10 @@ export const registerUser = createAsyncThunk(
        // console.log(answer.user);
         return answer.user;
     } else {
-        
+        //console.log(JSON.stringify(await response.json()));
+        //console.log(await response.json());
+       const answer = await response.json();
+        console.log(answer.message);
         return response.status;
        // console.log(response.status);
        // console.log(response)
@@ -30,6 +33,7 @@ export const registerUser = createAsyncThunk(
 }
 );
 
+export const loginUser = createAsyncThunk();
 
 const options ={
     name: 'auth',
@@ -39,9 +43,12 @@ const options ={
         password:'',
         role:'',
         openRegistrationForm: false,
-        activeLoginForm: true,
+        openLoginForm: false,
         errorMessage:'',
+        errorMessageEmail:'',
+        errorMessagePassword:'',
         userMessage:'',
+        
 
     },
     reducers: {
@@ -51,8 +58,17 @@ const options ={
         closeRegistrationForm: (state,action) => {
             state.openRegistrationForm = false;
         },
-        activeLoginForm: (state, action) => {
-            state.activeLoginForm = false;
+        closeLoginForm: (state,action) => {
+            state.openLoginForm = false;
+        },
+        openLoginForm: (state, action) => {
+            state.openLoginForm = true;
+        },
+        validateErrorEmail: (state, action) => {
+            state.errorMessageEmail = action.payload;
+        },
+        validateErrorPassword: (state, action) => {
+            state.errorMessagePassword = action.payload;
         }
 
     },
@@ -61,11 +77,13 @@ const options ={
         state.isFetching = true;
         state.error = false;
         state.userMessage = 'Пожалуйста, ждите...';
+        
     },
     [registerUser.fulfilled]: (state, action) => {
         state.isFetching = true;
-         //WHY WE DOUBLE IN REDUCER??????
-        console.log(action.payload);
+         
+       // console.log(action.payload);
+        
         if (action.payload === 409) {
             state.errorMessage = 'Такой пользователь уже существует';
             state.userMessage ='';
@@ -92,5 +110,7 @@ const options ={
 
 };
 export const authSlice = createSlice(options);
-export const {openRegistrationForm, closeRegistrationForm,activeLoginForm} = authSlice.actions;
+export const {openRegistrationForm, closeRegistrationForm,
+    activeLoginForm, validateErrorPassword, 
+    validateErrorEmail, openLoginForm, closeLoginForm} = authSlice.actions;
 export default authSlice.reducer;
