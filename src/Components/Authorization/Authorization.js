@@ -1,5 +1,4 @@
 import React from 'react';
-//import { closeActivationForm } from '../authSlice';
 import './Authorization.css';
 import Registration from "../Authorization/Registration/Registration";
 import Login from "../Authorization/Login/Login";
@@ -38,15 +37,7 @@ const renderActivation = () => {
     />
   );
 };
-// RENDER BUTTONS
-const buttonsForm = () => {
-    return (
-        <div className="Authorization">
-          <button onClick = {() => dispatch(openLoginForm())}>Логин</button>
-          <button onClick = {() => dispatch(openRegistrationForm())}>Регистрация</button>
-        </div>
-      );
-}
+
 
 const render = () =>{
     if (props.userData.email) {

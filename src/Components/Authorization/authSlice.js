@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk(
         const answer = await response.json();
         console.log('Успех:', JSON.stringify(answer));
        // console.log(answer.user);
-        return answer.user;
+        return answer;
     } else {
         //console.log(JSON.stringify(await response.json()));
         //console.log(await response.json());
@@ -52,7 +52,7 @@ export const loginUser = createAsyncThunk(
          const answer = await response.json();
          console.log('Успех:ЛОГИН', JSON.stringify(answer));
         // console.log(answer.user);
-         return answer.user;
+         return answer;
      } else {
          //console.log(JSON.stringify(await response.json()));
          //console.log(await response.json());
@@ -81,6 +81,8 @@ const options ={
         errorMessageEmail:'',
         errorMessagePassword:'',
         userMessage:'',
+        accessToken:'',
+        refreshToken:''
         
 
     },
@@ -134,11 +136,14 @@ const options ={
             console.log('user exist ');
             
         } else {
-            state.email = action.payload.useremail;
-            state.id = action.payload.id;
+            console.log(action.payload);
+            state.email = action.payload.user.useremail;
+            state.id = action.payload.user.id;
             state.openRegistrationForm = false;
             state.userMessage ='';
            // state.openActivationForm = true;
+           state.accessToken = action.payload.accessToken;
+           state.refreshToken = action.payload.refreshToken;
 
         }
        
@@ -174,10 +179,13 @@ const options ={
         }
         
         else{
-            state.email = action.payload.useremail;
-            state.id = action.payload.id;
+            console.log(action.payload);
+            state.email = action.payload.user.useremail;
+            state.id = action.payload.user.id;
             state.openLoginForm = false;
             state.userMessage ='';
+            state.accessToken = action.payload.accessToken;
+            state.refreshToken = action.payload.refreshToken;
            // state.openActivationForm = true;
 
         }
