@@ -1,6 +1,6 @@
 import React from 'react';
 import './Login.css';
-import {  validateErrorPassword,loginUser, validateErrorEmail, closeLoginForm } from '../authSlice';
+import {  validateErrorPassword,loginUser, validateErrorEmail, closeLoginForm, clearErrorMessages } from '../authSlice';
 
 import  {validatePassword, validateEmail }  from '../../../helper/validation';
 
@@ -43,6 +43,7 @@ handleUserInputMail(e) {
     const {dispatch} = this.props;
     const message = validateEmail(e.target.value);
     dispatch(validateErrorEmail(message));
+    dispatch(clearErrorMessages());
     
     this.setState({
         userInputMail: e.target.value
@@ -52,23 +53,25 @@ handleUserInputPassword(e) {
     const {dispatch} = this.props;
     const message = validatePassword(e.target.value);
     dispatch(validateErrorPassword(message));
+    dispatch(clearErrorMessages());
 
     this.setState({
         userInputPassword: e.target.value,
         errorValidation: message
     })
 }        
-    render() {
-        let style;
-        if (!this.props.userData.errorMessage 
-            && !this.props.userData.errorMessageEmail 
-            && !this.props.userData.errorMessagePassword
-            && this.state.userInputMail && this.state.userInputPassword) {
-          
-                style = ''
-            } else {
-                style = 'disabled'
-            }
+render() {
+    let style;
+        
+    if (/*!this.props.userData.errorMessage 
+        &&*/ !this.props.userData.errorMessageEmail 
+        && !this.props.userData.errorMessagePassword
+        && this.state.userInputMail && this.state.userInputPassword) {
+      
+            style = ''
+        } else {
+            style = 'disabled'
+        }
         return (
             <div className="Login">
                <h3>Вход на WSCproject</h3>
@@ -82,7 +85,7 @@ handleUserInputPassword(e) {
                 <input type='password' id="password" placeholder="Пароль" required minLength ="5" 
                 value={this.state.userInputPassword} onChange={this.handleUserInputPassword}/>
                 <p id="error">{this.props.userData.errorMessagePassword}</p>
-                <button  onClick={this.onSend} disabled={{style:'disabled'}}>Вход</button>
+                <button  onClick={this.onSend} disabled={style}>Вход</button>
                 <a href="#">Забыли аккаунт?</a>
                 <span>или</span>
                 <button>Создать аккаунт</button>

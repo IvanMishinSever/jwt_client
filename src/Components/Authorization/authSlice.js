@@ -33,7 +33,39 @@ export const registerUser = createAsyncThunk(
 }
 );
 
-export const loginUser = createAsyncThunk();
+export const loginUser = createAsyncThunk(
+    
+"auth/loginUser", async(item) => {
+    // console.log(item);
+    
+     const url = "http://localhost:4001/api/auth/login/";
+     const urlToFetch = `${url}`;
+     const response = await fetch(urlToFetch, {
+         method: 'POST',
+         headers: {"Content-Type": "application/json; charset=utf-8"},
+         body: JSON.stringify({
+             useremail: item.email,
+             user_password: item.password
+         })
+     });
+     if (response.ok) {
+         const answer = await response.json();
+         console.log('Успех:ЛОГИН', JSON.stringify(answer));
+        // console.log(answer.user);
+         return answer.user;
+     } else {
+         //console.log(JSON.stringify(await response.json()));
+         //console.log(await response.json());
+        const answer = await response.json();
+         console.log(answer.message);
+         return response.status;
+        // console.log(response.status);
+        // console.log(response)
+     }
+ 
+ 
+ }
+);
 
 const options ={
     name: 'auth',
@@ -118,6 +150,46 @@ const options ={
         state.errorMessage = 'Сервер временно недоступен';
         state.userMessage ='';
         console.log('bad request!')
+    },
+    [loginUser.pending]: (state, action) => {
+        state.isFetching = true;
+        state.error = false;
+        state.userMessage = 'Загрузка...';
+        
+    },
+    [loginUser.fulfilled]: (state, action) => {
+        state.isFetching = true;
+         
+       // console.log(action.payload);
+        
+        if (action.payload === 404) {
+            state.errorMessage = 'Электронная почта или имя пользователя не обнаружены в базе данных.';
+            state.userMessage ='';
+            console.log('user NOT exist ');
+            
+        } else if (action.payload === 401) {
+                state.errorMessage = 'К сожалению, вы ввели неправильный пароль. Проверьте свой пароль еще раз.';
+                state.userMessage ='';
+                console.log('wrong password ');
+        }
+        
+        else{
+            state.email = action.payload.useremail;
+            state.id = action.payload.id;
+            state.openLoginForm = false;
+            state.userMessage ='';
+           // state.openActivationForm = true;
+
+        }
+       
+    },
+    
+    [loginUser.rejected]: (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+        state.errorMessage = 'Сервер временно недоступен';
+        state.userMessage ='';
+        console.log('bad request login!')
     }
     }
     
