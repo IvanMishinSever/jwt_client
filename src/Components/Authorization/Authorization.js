@@ -4,7 +4,7 @@ import Registration from "../Authorization/Registration/Registration";
 import Login from "../Authorization/Login/Login";
 
 import Activation from "../Authorization/Activation/Activation";
-import {openRegistrationForm, openLoginForm} from '../Authorization/authSlice';
+import {openRegistrationForm, openLoginForm, logout, getInitialState} from '../Authorization/authSlice';
 
 const Authorization= (props) => {
     const {dispatch} = props;
@@ -37,14 +37,19 @@ const renderActivation = () => {
     />
   );
 };
+// HANDLER
+const onSend = () => {
 
+    dispatch(logout());
+    dispatch(getInitialState());
+}
 
 const render = () =>{
     if (props.userData.email) {
         return (
             <div className="Authorization">
             <h3>Пользователь {props.userData.email}</h3>
-            <button>Выход</button>
+            <button onClick = {() => onSend()}>Выход</button>
             
             </div>
           );
@@ -54,8 +59,8 @@ const render = () =>{
             <div className="Authorization">
             <button onClick = {() => dispatch(openLoginForm())}>Логин</button>
             <button onClick = {() => dispatch(openRegistrationForm())}>Регистрация</button>
-            <h3>Пользователь {props.userData.email}</h3>
-            <button>Выход</button>
+            <h3>Пользователь не авторизован</h3>
+            
          
             </div>
           );

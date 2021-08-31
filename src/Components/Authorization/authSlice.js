@@ -12,8 +12,13 @@ export const registerUser = createAsyncThunk(
         body: JSON.stringify({
             useremail: item.email,
             user_password: item.password
-        })
+        }),
+        credential: 'include',
+        mode: 'cors',
+
+
     });
+
     if (response.ok) {
         const answer = await response.json();
         console.log('Успех:', JSON.stringify(answer));
@@ -32,40 +37,97 @@ export const registerUser = createAsyncThunk(
 
 }
 );
+//LOGOUT
+export const logout = createAsyncThunk(
+    "auth/logout", async() => {
+       // console.log(item);
+       
+        const url = "http://localhost:4001/api/auth/logout/";
+        const urlToFetch = `${url}`;
+        const response = await fetch(urlToFetch, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json; charset=utf-8"},
+            body: JSON.stringify({
+               
+            })
+        });
 
-export const loginUser = createAsyncThunk(
+
+        if (response.ok) {
+            const answer = await response.json();
+            console.log('Успех LOGOUT:', JSON.stringify(answer));
+            console.log(answer);
+            return answer;
+        } else {
+            //console.log(JSON.stringify(await response.json()));
+            //console.log(await response.json());
+           const answer = await response.json();
+           console.log('BAD LOGOUT');
+            console.log(answer);
+            return response.status;
+           // console.log(response.status);
+           // console.log(response)
+        }
     
-"auth/loginUser", async(item) => {
-    // console.log(item);
     
-     const url = "http://localhost:4001/api/auth/login/";
-     const urlToFetch = `${url}`;
-     const response = await fetch(urlToFetch, {
-         method: 'POST',
-         headers: {"Content-Type": "application/json; charset=utf-8"},
-         body: JSON.stringify({
-             useremail: item.email,
-             user_password: item.password
-         })
-     });
-     if (response.ok) {
-         const answer = await response.json();
-         console.log('Успех:ЛОГИН', JSON.stringify(answer));
-        // console.log(answer.user);
-         return answer;
-     } else {
-         //console.log(JSON.stringify(await response.json()));
-         //console.log(await response.json());
-        const answer = await response.json();
-         console.log(answer.message);
-         return response.status;
-        // console.log(response.status);
-        // console.log(response)
+    }
+    );
+    //LOGIN
+    export const loginUser = createAsyncThunk(
+        
+    "auth/loginUser", async(item) => {
+        // console.log(item);
+        
+         const url = "http://localhost:4001/api/auth/login/";
+         const urlToFetch = `${url}`;
+         const response = await fetch(urlToFetch, {
+             method: 'POST',
+             headers: {"Content-Type": "application/json; charset=utf-8"},
+             body: JSON.stringify({
+                 useremail: item.email,
+                 user_password: item.password
+             }),
+             
+            credentials: 'include',
+            mode: 'cors',
+         });
+         if (response.ok) {
+             const answer = await response.json();
+             console.log('Успех:ЛОГИН', JSON.stringify(answer));
+             
+             return answer;
+         } else {
+             //console.log(JSON.stringify(await response.json()));
+             //console.log(await response.json());
+            const answer = await response.json();
+             console.log(answer.message);
+             return response.status;
+            // console.log(response.status);
+            // console.log(response)
+         }
+     
+     
      }
- 
- 
- }
-);
+    );
+const initialState ={
+            
+            id:'',
+            email:'',
+            password:'',
+            role:'',
+            openRegistrationForm: false,
+            openLoginForm: false,
+            openActivationForm: false,
+            errorMessage:'',
+            errorMessageEmail:'',
+            errorMessagePassword:'',
+            userMessage:'',
+            accessToken:'',
+            refreshToken:''
+            
+    
+};
+
 
 const options ={
     name: 'auth',
@@ -87,6 +149,10 @@ const options ={
 
     },
     reducers: {
+         // GET first INITIAL STATE
+         getInitialState: state  => 
+         initialState,
+       
         openRegistrationForm: (state,action) => {
             state.openRegistrationForm = true;
         },
@@ -99,6 +165,9 @@ const options ={
         },
         closeLoginForm: (state,action) => {
             state.openLoginForm = false;
+            state.errorMessage = "";
+            state.errorMessageEmail = "";
+            state.errorMessagePassword = "";
         },
         openLoginForm: (state, action) => {
             state.openLoginForm = true;
@@ -144,6 +213,7 @@ const options ={
            // state.openActivationForm = true;
            state.accessToken = action.payload.accessToken;
            state.refreshToken = action.payload.refreshToken;
+           localStorage.setItem('token', action.payload.accessToken )
 
         }
        
@@ -187,6 +257,7 @@ const options ={
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
            // state.openActivationForm = true;
+           localStorage.setItem('token', action.payload.accessToken )
 
         }
        
@@ -198,6 +269,28 @@ const options ={
         state.errorMessage = 'Сервер временно недоступен';
         state.userMessage ='';
         console.log('bad request login!')
+    },
+    [logout.pending]: (state, action) => {
+        state.isFetching = true;
+        state.error = false;
+       
+        
+    },
+    [logout.fulfilled]: (state, action) => {
+        state.isFetching = true;
+           
+        state.userMessage ='LOGOUT OK';
+        localStorage.removeItem('token');
+           
+       
+    },
+    
+    [logout.rejected]: (state, action) => {
+        state.isFetching = false;
+        state.error = action.payload;
+        state.errorMessage = 'Сервер временно недоступен';
+        state.userMessage ='';
+        console.log('bad request logout!')
     }
     }
     
@@ -207,6 +300,7 @@ export const authSlice = createSlice(options);
 export const {openRegistrationForm, closeRegistrationForm,
     activeLoginForm, validateErrorPassword, 
     validateErrorEmail, openLoginForm, closeLoginForm, 
-    clearErrorMessages, closeActivationForm} = authSlice.actions;
+    clearErrorMessages, closeActivationForm,
+    getInitialState } = authSlice.actions;
 export default authSlice.reducer;
                                                                           
