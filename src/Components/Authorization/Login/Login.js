@@ -8,8 +8,8 @@ export default class Login extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-           // userInputMail:'wscad@yandex.ru',
-           // userInputPassword:'121212',
+           // userInputMail:'sandvich2008@rambler.ru',
+          //  userInputPassword:'121212',
             userInputMail:'',
             userInputPassword:'',
             errorValidation:'',

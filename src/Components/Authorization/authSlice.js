@@ -13,12 +13,12 @@ export const registerUser = createAsyncThunk(
             useremail: item.email,
             user_password: item.password
         }),
-        credential: 'include',
+        credentials: 'include',
         mode: 'cors',
 
 
     });
-
+    
     if (response.ok) {
         const answer = await response.json();
         console.log('Успех:', JSON.stringify(answer));
@@ -29,6 +29,7 @@ export const registerUser = createAsyncThunk(
         //console.log(await response.json());
        const answer = await response.json();
         console.log(answer.message);
+        console.log(response);
         return response.status;
        // console.log(response.status);
        // console.log(response)
@@ -37,41 +38,34 @@ export const registerUser = createAsyncThunk(
 
 }
 );
+
+
 //LOGOUT
+
 export const logout = createAsyncThunk(
     "auth/logout", async() => {
-       // console.log(item);
+
        
         const url = "http://localhost:4001/api/auth/logout/";
         const urlToFetch = `${url}`;
         const response = await fetch(urlToFetch, {
-            method: 'POST',
+            method: 'GET',
             headers: {"Content-Type": "application/json; charset=utf-8"},
-            body: JSON.stringify({
-               
-            })
+           
+            credentials: 'include',
+            mode: 'cors',
         });
-
-
+        console.log(response.ok);
         if (response.ok) {
-            const answer = await response.json();
-            console.log('Успех LOGOUT:', JSON.stringify(answer));
-            console.log(answer);
-            return answer;
+            console.log("Успех LOGOUT");
         } else {
-            //console.log(JSON.stringify(await response.json()));
-            //console.log(await response.json());
-           const answer = await response.json();
+           
            console.log('BAD LOGOUT');
-            console.log(answer);
-            return response.status;
-           // console.log(response.status);
-           // console.log(response)
+         return response.status;
+         }
         }
-    
-    
-    }
     );
+   
     //LOGIN
     export const loginUser = createAsyncThunk(
         
@@ -93,6 +87,7 @@ export const logout = createAsyncThunk(
          });
          if (response.ok) {
              const answer = await response.json();
+             
              console.log('Успех:ЛОГИН', JSON.stringify(answer));
              
              return answer;
@@ -278,8 +273,8 @@ const options ={
     },
     [logout.fulfilled]: (state, action) => {
         state.isFetching = true;
-           
-        state.userMessage ='LOGOUT OK';
+        console.log(action);
+       // state.userMessage ='LOGOUT OK';
         localStorage.removeItem('token');
            
        
@@ -288,6 +283,7 @@ const options ={
     [logout.rejected]: (state, action) => {
         state.isFetching = false;
         state.error = action.payload;
+      console.log(action);
         state.errorMessage = 'Сервер временно недоступен';
         state.userMessage ='';
         console.log('bad request logout!')
