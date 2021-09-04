@@ -1,6 +1,7 @@
 import React from 'react';
 import './Login.css';
-import {  validateErrorPassword,loginUser, validateErrorEmail, closeLoginForm, clearErrorMessages } from '../authSlice';
+import {  validateErrorPassword,loginUser, validateErrorEmail, 
+    closeLoginForm, clearErrorMessages, openRegistrationForm } from '../authSlice';
 
 import  {validatePassword, validateEmail }  from '../../../helper/validation';
 
@@ -18,6 +19,8 @@ export default class Login extends React.Component {
         this.handleUserInputPassword = this.handleUserInputPassword.bind(this);
         this.onSend = this.onSend.bind(this);
         this.onClose = this.onClose.bind(this);
+        this.onCreate = this.onCreate.bind(this);
+
     }
     //CLICK CONTINUE
 onSend() {
@@ -38,6 +41,11 @@ onClose() {
  const {dispatch} = this.props;
  dispatch(closeLoginForm());
 }
+onCreate() {
+    const {dispatch} = this.props;
+    dispatch(closeLoginForm());
+    dispatch(openRegistrationForm());
+   }
 
 handleUserInputMail(e) {
     const {dispatch} = this.props;
@@ -88,7 +96,7 @@ render() {
                 <button  onClick={this.onSend} disabled={style}>Вход</button>
                 <a href="#">Забыли аккаунт?</a>
                 <span>или</span>
-                <button>Создать аккаунт</button>
+                <button onClick={this.onCreate}>Создать аккаунт</button>
                 <button onClick={this.onClose}>Отмена</button>
             </div>
         )

@@ -9,61 +9,19 @@ import {openRegistrationForm, openLoginForm} from '../Authorization/authSlice';
 
 const Main = (props) => {
   const {dispatch} = props;
- // const [showRegistration, setShowRegistration] = useState(false);
-/*
-//RENDER COMPONENT
-  const renderRegistration = () => {
-    return (
-    <Registration 
-      dispatch={dispatch}
-      userData={props.userData}
-      />
-    );
-  };
 
-//LOGIN COMPONENT
-const renderLogin = () => {
-  return (
-  <Login 
-    dispatch={dispatch}
-    userData={props.userData}
-    />
-  );
-};
-//LACTIVATION COMPONENT
-const renderActivation = () => {
-  return (
-  <Activation 
-    dispatch={dispatch}
-    userData={props.userData}
-    />
-  );
-};
-*/
-/*
-// MAIN VIEW RENDER
-const renderMainView = () => {
+const renderMainViewBeforeRegistration = () => {
   return (
   <div className="Main">
-    <button onClick = {() => dispatch(openLoginForm())}>Логин</button>
-    <button onClick = {() => dispatch(openRegistrationForm())}>Регистрация</button>
-    <h3>Пользователь {props.userData.email}</h3>
-    <button>Выход</button>
-    <p> HELLO </p>
     <Authorization
     dispatch={dispatch}
     userData={props.userData}
     />
-    <MainData 
-    dispatch={dispatch}
-    userData={props.userData}
-    />
- </div>
+  </div>
 
   );
 };
-*/
-const renderMainView = () => {
+const renderMainViewAfterRegistration = () => {
   return (
   <div className="Main">
     <Authorization
@@ -81,10 +39,11 @@ const renderMainView = () => {
 
 //RENDER
 
-/*
-  if (props.userData.openRegistrationForm === true) {
-      return renderRegistration();
+
+  if (props.userData.openMainData === true) {
+      return renderMainViewAfterRegistration();
   }
+  /*
   if (props.userData.openLoginForm === true) {
     return renderLogin();
 }
@@ -93,7 +52,7 @@ const renderMainView = () => {
   }
  */ 
   
-      return renderMainView();
+      return renderMainViewBeforeRegistration();
 
   
  

@@ -113,6 +113,7 @@ const initialState ={
             openRegistrationForm: false,
             openLoginForm: false,
             openActivationForm: false,
+            openMainData: false,
             errorMessage:'',
             errorMessageEmail:'',
             errorMessagePassword:'',
@@ -253,6 +254,7 @@ const options ={
             state.refreshToken = action.payload.refreshToken;
            // state.openActivationForm = true;
            localStorage.setItem('token', action.payload.accessToken )
+           state.openMainData = true;
 
         }
        
