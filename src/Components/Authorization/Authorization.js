@@ -5,6 +5,7 @@ import Login from "../Authorization/Login/Login";
 
 import Activation from "../Authorization/Activation/Activation";
 import {openRegistrationForm, openLoginForm, logout, getInitialState} from '../Authorization/authSlice';
+import { getInitialStateData } from '../Main/userSlice';
 
 const Authorization= (props) => {
     const {dispatch} = props;
@@ -42,6 +43,7 @@ const onSend = () => {
 
     dispatch(logout());
     dispatch(getInitialState());
+    dispatch(getInitialStateData());
 }
 
 const render = () =>{

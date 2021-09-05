@@ -16,6 +16,7 @@ export default class App extends React.Component {
             <Main
             dispatch={dispatch}
             userData={state.auth}
+            getData={state.user}
             />
         </div>
             

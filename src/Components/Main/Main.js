@@ -31,6 +31,7 @@ const renderMainViewAfterRegistration = () => {
     <MainData 
     dispatch={dispatch}
     userData={props.userData}
+    getData={props.getData}
     />
  </div>
 
