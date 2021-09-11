@@ -63,7 +63,7 @@ const render = () =>{
             <button onClick = {() => dispatch(openLoginForm())}>Логин</button>
             <button onClick = {() => dispatch(openRegistrationForm())}>Регистрация</button>
             <h3>Пользователь не авторизован</h3>
-            <Example1 dispatch={dispatch} />
+            {/*<Example1 dispatch={dispatch} />*/}
             
          
             </div>
