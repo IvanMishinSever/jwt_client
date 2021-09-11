@@ -2,21 +2,37 @@ import React from "react";
 
 import './MainData.css';
 import { getData } from "../userSlice";
+import { refreshToken } from "../../Authorization/authSlice";
+import Example1 from "../../Example_Promises";
 
 const MainData = (props) => {
   const {dispatch} = props;
 
   const onGetData = () => {
-   // console.log(props.getData)
-    dispatch(getData());
-  /*  if (props.getData.data) {
-      renderUsers();
-    } else {
-      return null;}
-*/
+
+   dispatch(getData())
+   .unwrap()
+   .then((res) => {
+    console.log("RES" + " " + res); 
+   
+    if (res === 401)   {
+      console.log("REFRESH NOW")
+        dispatch(refreshToken())
+        .then(() => {
+          console.log("START GET DATA AFTER REFRESH")
+          dispatch(getData());
+        });
+      }
+         
+
+    }).catch((rej) => {
+        console.log(rej);
+    });
+
   }
 const renderUsers = () => {
   const data = props.getData.data;
+  console.log(data);
   return(
     data.map(item => {
       return(
@@ -39,7 +55,8 @@ const renderUsers = () => {
           </p>
           <button onClick={onGetData}>get secret data</button>
           {props.getData.data ? renderUsers(): null}
-        
+        <p>example</p>
+        <Example1 />
       </div>
     );
 

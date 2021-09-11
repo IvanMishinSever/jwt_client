@@ -6,6 +6,7 @@ import Login from "../Authorization/Login/Login";
 import Activation from "../Authorization/Activation/Activation";
 import {openRegistrationForm, openLoginForm, logout, getInitialState} from '../Authorization/authSlice';
 import { getInitialStateData } from '../Main/userSlice';
+import Example1 from '../Example_Promises';
 
 const Authorization= (props) => {
     const {dispatch} = props;
@@ -62,6 +63,7 @@ const render = () =>{
             <button onClick = {() => dispatch(openLoginForm())}>Логин</button>
             <button onClick = {() => dispatch(openRegistrationForm())}>Регистрация</button>
             <h3>Пользователь не авторизован</h3>
+            <Example1 dispatch={dispatch} />
             
          
             </div>

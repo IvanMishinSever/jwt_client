@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { promise_10, promise_11, first, second, basic } from "../func_for_propmises";
+
 
 export const registerUser = createAsyncThunk(
 "auth/registerUser", async(item) => {
@@ -67,7 +69,7 @@ export const logout = createAsyncThunk(
     );
    
     //LOGIN
-    export const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk(
         
     "auth/loginUser", async(item) => {
         // console.log(item);
@@ -104,6 +106,56 @@ export const logout = createAsyncThunk(
      
      }
     );
+
+//REFRESH
+
+ export const refreshToken = createAsyncThunk(
+    "auth/refreshToken", async() => {
+        
+        
+        const url = "http://localhost:4001/api/auth/refresh/";
+        const urlToFetch = `${url}`;
+        const response = await fetch(urlToFetch, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                
+            },
+           
+            credentials: 'include',
+            mode: 'cors',
+        });
+        console.log(response.ok);
+        if (response.ok) {
+            const answer = await response.json()
+            console.log(answer.accessToken);
+            console.log("Успех REFRESH", JSON.stringify(answer));
+           // getData()
+           return answer;
+        } else {
+           
+           console.log('BAD REFRESH');
+         return response.status;
+         }
+         
+        }
+    
+);
+
+
+
+
+
+
+
+
+//EXAMPLE 
+
+export const example84 = createAsyncThunk(
+    "auth/example",async () => await basic(promise_10));
+
+
+//INITIAL STATE BEGINNING
 const initialState ={
             
             id:'',
@@ -289,7 +341,64 @@ const options ={
         state.errorMessage = 'Сервер временно недоступен';
         state.userMessage ='';
         console.log('bad request logout!')
-    }
+    },
+
+    //EXAMPLE!!!!!!!!!!!!!!!!!!!
+    [example84.pending]: (state, action) => {
+        console.log('LOAD 84!!!!!!!!!');
+        },
+    [example84.fulfilled]: (state, action) => {
+        console.log('OK 84!!!!!!!!!');
+        },
+    [example84.rejected]: (state, action) => {
+            console.log('BAD 84!!!!!!!!!');
+        },
+        //REFRESH
+        [refreshToken.pending]: (state, action) => {
+            state.isFetching = true;
+            state.error = false;
+            state.userMessage = 'Загрузка...';
+            
+        },
+        [refreshToken.fulfilled]: (state, action) => {
+            state.isFetching = true;
+             
+           // console.log(action.payload);
+            
+            if (action.payload === 404) {
+                state.errorMessage = 'Электронная почта или имя пользователя не обнаружены в базе данных.';
+                state.userMessage ='';
+                console.log('user NOT exist ');
+                
+            } else if (action.payload === 401) {
+                    state.errorMessage = 'К сожалению, вы ввели неправильный пароль. Проверьте свой пароль еще раз.';
+                    state.userMessage ='';
+                    console.log('wrong password ');
+            }
+            
+            else{
+              //  console.log(action.payload);
+                state.email = action.payload.user.useremail;
+                state.id = action.payload.user.id;
+               
+                state.userMessage ='';
+                state.accessToken = action.payload.accessToken;
+                state.refreshToken = action.payload.refreshToken;
+               // state.openActivationForm = true;
+               localStorage.setItem('token', action.payload.accessToken )
+              // state.openMainData = true;
+    
+            }
+           
+        },
+        
+        [refreshToken.rejected]: (state, action) => {
+            state.isFetching = false;
+            state.error = action.payload;
+            state.errorMessage = 'Сервер временно недоступен';
+            state.userMessage ='';
+            console.log('bad request login!')
+        },    
     }
     
 
