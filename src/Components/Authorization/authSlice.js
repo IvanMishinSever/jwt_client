@@ -126,6 +126,7 @@ export const loginUser = createAsyncThunk(
             mode: 'cors',
         });
         console.log(response.ok);
+        console.log(response);
         if (response.ok) {
             const answer = await response.json()
             console.log(answer.accessToken);
@@ -141,6 +142,7 @@ export const loginUser = createAsyncThunk(
         }
     
 );
+
 
 
 
@@ -380,7 +382,7 @@ const options ={
               //  console.log(action.payload);
                 state.email = action.payload.user.useremail;
                 state.id = action.payload.user.id;
-               
+                state.openMainData = true;
                 state.userMessage ='';
                 state.accessToken = action.payload.accessToken;
                 state.refreshToken = action.payload.refreshToken;
