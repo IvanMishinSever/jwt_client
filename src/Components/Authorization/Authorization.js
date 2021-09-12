@@ -69,8 +69,10 @@ const render = () =>{
             </div>
           );
     }
+    
    
 }
+
 
 
     if (props.userData.openRegistrationForm === true) {

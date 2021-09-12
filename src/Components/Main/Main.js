@@ -17,6 +17,7 @@ const renderMainViewBeforeRegistration = () => {
     dispatch={dispatch}
     userData={props.userData}
     />
+    {!props.userData.isActivated && props.userData.id ? renderActivationMessage(): null}
   </div>
 
   );
@@ -38,10 +39,20 @@ const renderMainViewAfterRegistration = () => {
   );
 };
 
+
+// RENDER ACTIVATION ALERT
+const renderActivationMessage = () => {
+  return (
+    <div className="MainData" id="ActivationMessage">
+      <h2>Аккаунт не активирован.</h2>
+
+    </div>
+  )
+}
 //RENDER
 
 
-  if (props.userData.openMainData === true) {
+  if (props.userData.openMainData === true && props.userData.isActivated === true ) {
       return renderMainViewAfterRegistration();
   }
   /*

@@ -9,10 +9,10 @@ export default class Login extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            userInputMail:'sandvich2008@rambler.ru',
-            userInputPassword:'121212',
-            //userInputMail:'',
-           // userInputPassword:'',
+           // userInputMail:'sandvich2008@rambler.ru',
+           // userInputPassword:'121212',
+            userInputMail:'',
+            userInputPassword:'',
             errorValidation:'',
         }
         this.handleUserInputMail = this.handleUserInputMail.bind(this);

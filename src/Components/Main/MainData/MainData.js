@@ -50,7 +50,7 @@ const onGetData = async () => {
     console.log(e);
   }
 }
-
+//RENDER USERS
 const renderUsers = () => {
   const data = props.getData.data;
   console.log(data);
@@ -76,8 +76,10 @@ const renderUsers = () => {
           </p>
           <button onClick={onGetData}>get secret data</button>
           {props.getData.data ? renderUsers(): null}
-        <p>example</p>
-        {/*<Example1 />*/}
+          <p>example</p>
+          
+          
+          {/*<Example1 />*/}
       </div>
     );
 

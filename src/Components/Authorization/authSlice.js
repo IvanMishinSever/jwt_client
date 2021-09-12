@@ -173,7 +173,8 @@ const initialState ={
             errorMessagePassword:'',
             userMessage:'',
             accessToken:'',
-            refreshToken:''
+            refreshToken:'',
+            isActivated: false
             
     
 };
@@ -194,8 +195,8 @@ const options ={
         errorMessagePassword:'',
         userMessage:'',
         accessToken:'',
-        refreshToken:''
-        
+        refreshToken:'',
+        isActivated: false
 
     },
     reducers: {
@@ -309,6 +310,7 @@ const options ={
            // state.openActivationForm = true;
            localStorage.setItem('token', action.payload.accessToken )
            state.openMainData = true;
+           state.isActivated = action.payload.user.isActivated;
 
         }
        
@@ -389,6 +391,7 @@ const options ={
                // state.openActivationForm = true;
                localStorage.setItem('token', action.payload.accessToken )
               // state.openMainData = true;
+              state.isActivated = action.payload.user.isActivated;
     
             }
            
