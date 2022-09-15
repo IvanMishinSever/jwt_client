@@ -1,0 +1,37 @@
+.Registration  {
+    display: block;
+    justify-content: center;
+    align-items: center;
+   /* padding: 1.5rem;*/
+
+    position: absolute;
+    top:  100px;
+    left: 100px;
+    width: 300px;
+    height: 300px;
+    z-index: 5;
+    background-color: rgba(128, 128, 128, 0.164);
+
+    border-bottom: 1px solid black;
+   /*flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;*/
+    
+}
+#error {
+    color: red;
+}
+#message {
+    color: rgb(52, 207, 38);
+}
+
+input:focus:required:invalid {
+    border-color:red;
+    color: red;
+    box-shadow: none;
+}
+input:focus:required:valid {
+    border-color: green;
+    color: green;
+    box-shadow: none;
+}
