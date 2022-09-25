@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { promise_10, promise_11, first, second, basic } from "../func_for_propmises";
+import Config from "../../config/config.js";
 
+const serverPath = Config.serverPath;
+console.log(serverPath);
 
 export const registerUser = createAsyncThunk(
 "auth/registerUser", async(item) => {
    // console.log(item);
    
-    const url = "http://localhost:4001/api/auth/registration/";
+    const url = serverPath + "/api/auth/registration/";
     const urlToFetch = `${url}`;
     const response = await fetch(urlToFetch, {
         method: 'POST',
@@ -16,6 +19,7 @@ export const registerUser = createAsyncThunk(
             user_password: item.password
         }),
         credentials: 'include',
+
         mode: 'cors',
 
 
@@ -48,7 +52,7 @@ export const logout = createAsyncThunk(
     "auth/logout", async() => {
 
        
-        const url = "http://localhost:4001/api/auth/logout/";
+        const url = serverPath + "/api/auth/logout/";
         const urlToFetch = `${url}`;
         const response = await fetch(urlToFetch, {
             method: 'GET',
@@ -74,7 +78,7 @@ export const loginUser = createAsyncThunk(
     "auth/loginUser", async(item) => {
         // console.log(item);
         
-         const url = "http://localhost:4001/api/auth/login/";
+         const url = serverPath + "/api/auth/login/";
          const urlToFetch = `${url}`;
          const response = await fetch(urlToFetch, {
              method: 'POST',
@@ -113,7 +117,7 @@ export const loginUser = createAsyncThunk(
     "auth/refreshToken", async() => {
         
         
-        const url = "http://localhost:4001/api/auth/refresh/";
+        const url = serverPath + "/api/auth/refresh/";
         const urlToFetch = `${url}`;
         const response = await fetch(urlToFetch, {
             method: 'GET',
