@@ -1,8 +1,11 @@
 import {  createSlice,  createAsyncThunk } from "@reduxjs/toolkit";
+import Config from "../../config/config.js";
+
+const serverPath = Config.serverPath;
 
 export const getData = createAsyncThunk(
     "user/getData", async() => {
-        const url = "http://localhost:4001/api/users/";
+        const url = serverPath + "/api/users/";
         const urlToFetch = `${url}`;
         const response = await fetch(urlToFetch, {
             method: 'GET',
