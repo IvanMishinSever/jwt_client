@@ -259,7 +259,11 @@ const options ={
             state.userMessage ='';
             console.log('user exist ');
             
-        } else {
+        } else if (action.payload === 500) {
+            state.errorMessage = 'Технический сбой на сервере. Приносим свои извинения. Работаем над решением данной проблемы.';
+            state.userMessage ='';
+            console.log('error 500');
+    }    else {
             console.log(action.payload);
             state.email = action.payload.user.useremail;
             state.id = action.payload.user.id;
@@ -301,7 +305,11 @@ const options ={
                 state.errorMessage = 'К сожалению, вы ввели неправильный пароль. Проверьте свой пароль еще раз.';
                 state.userMessage ='';
                 console.log('wrong password ');
-        }
+        }else if (action.payload === 500) {
+            state.errorMessage = 'Технический сбой на сервере. Приносим свои извинения. Работаем над решением данной проблемы.';
+            state.userMessage ='';
+            console.log('error 500');
+    }
         
         else{
             console.log(action.payload);
@@ -383,6 +391,11 @@ const options ={
                     state.userMessage ='';
                     console.log('wrong password ');
             }
+            else if (action.payload === 500) {
+                state.errorMessage = 'К сожалению, внутренняя ошибка на сервере-надо разбираться :((((';
+                state.userMessage ='';
+                console.log('internal error 500');
+        }
             
             else{
               //  console.log(action.payload);
