@@ -66,7 +66,7 @@ export const getData = createAsyncThunk(
     
 );
 */
-
+/*
 async function refreshToken() {
     try{
         const url = "http://localhost:4001/api/auth/refresh/";
@@ -100,7 +100,7 @@ async function refreshToken() {
     }
 
 }
-
+*/
 const initialState = {
     users:'',
     data:[],
@@ -120,13 +120,14 @@ const options ={
         getInitialStateData: state =>
         initialState,
     },
-    extraReducers: {
-        [getData.pending]: (state, action) => {
+    extraReducers: (builder) => {
+        builder
+        .addCase(getData.pending, (state, action) => {
             state.isFetching = true;
             state.error = false;
             state.userMessage = 'Загрузка...';
-        },
-        [getData.fulfilled]: (state, action) => {
+        })
+        .addCase(getData.fulfilled, (state, action) => {
             if (action.payload === 401) {
                 
                 state.userMessage = ' NO AUTH!';
@@ -145,14 +146,14 @@ const options ={
              }
 
            
-        },
-        [getData.rejected]: (state, action) => {
+        })
+        .addCase(getData.rejected, (state, action) => {
 
             state.isFetching = false;
             state.error = action.payload;
             state.errorMessage = 'not get users something wrong!';
             state.userMessage = 'Загружено';
-        },
+        })
       /*  
         [refreshToken.pending]: (state, action) => {
             state.isFetching = true;

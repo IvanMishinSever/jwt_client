@@ -3,7 +3,7 @@ import React from "react";
 import './MainData.css';
 import { getData } from "../userSlice";
 import { refreshToken } from "../../Authorization/authSlice";
-//import Example1 from "../../Example_Promises";
+import Example1 from "../../Example_Promises";
 
 const MainData = (props) => {
   const {dispatch} = props;
@@ -36,11 +36,11 @@ const MainData = (props) => {
 const onGetData = async () => {
   try {
     const answer = await dispatch(getData()).unwrap();
-    console.log(answer);
+    //console.log(answer);
     if (answer === 401) {
       console.log("REFRESH NOW")
       const answer2 = await dispatch(refreshToken());
-      console.log(answer2);
+     // console.log(answer2);
       if (answer2) {
         console.log("START GET DATA AFTER REFRESH")
         dispatch(getData());
@@ -54,7 +54,7 @@ const onGetData = async () => {
 //RENDER USERS
 const renderUsers = () => {
   const data = props.getData.data;
-  console.log(data);
+ // console.log(data);
   return(
     data.map(item => {
       return(
@@ -76,11 +76,15 @@ const renderUsers = () => {
 
           </p>
           <button onClick={onGetData}>get secret data</button>
-          {props.getData.data ? renderUsers(): null}
+            <table>
+              <tbody>
+            {props.getData.data ? renderUsers(): null}
+            </tbody>
+            </table>
           <p>example</p>
           
           
-          {/*<Example1 />*/}
+          <Example1 />
       </div>
     );
 

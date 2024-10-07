@@ -36,7 +36,7 @@ const App = (props) => {
            dispatch(refreshToken());
             console.log( "TOKEN EXIST IN LOCALSTORAGE");
         }
-    },[]);
+    },[dispatch]);
     
      return (
         <div>

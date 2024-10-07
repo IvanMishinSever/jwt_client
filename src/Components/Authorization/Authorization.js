@@ -6,7 +6,7 @@ import Login from "../Authorization/Login/Login";
 import Activation from "../Authorization/Activation/Activation";
 import {openRegistrationForm, openLoginForm, logout, getInitialState} from '../Authorization/authSlice';
 import { getInitialStateData } from '../Main/userSlice';
-import Example1 from '../Example_Promises';
+//import Example1 from '../Example_Promises';
 
 const Authorization= (props) => {
     const {dispatch} = props;

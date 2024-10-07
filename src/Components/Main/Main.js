@@ -5,7 +5,7 @@ import './Main.css';
 import MainData from "./MainData/MainData";
 //import Activation from "../Authorization/Activation/Activation";
 import Authorization from "../Authorization/Authorization";
-import {openRegistrationForm, openLoginForm} from '../Authorization/authSlice';
+//import {openRegistrationForm, openLoginForm} from '../Authorization/authSlice';
 
 const Main = (props) => {
   const {dispatch} = props;

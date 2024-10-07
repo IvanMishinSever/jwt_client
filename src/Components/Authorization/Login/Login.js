@@ -94,7 +94,7 @@ render() {
                 value={this.state.userInputPassword} onChange={this.handleUserInputPassword}/>
                 <p id="error">{this.props.userData.errorMessagePassword}</p>
                 <button  onClick={this.onSend} disabled={style}>Вход</button>
-                <a href="#">Забыли аккаунт?</a>
+                {/*<a href="#">Забыли аккаунт?</a>*/}
                 <span>или</span>
                 <button onClick={this.onCreate}>Создать аккаунт</button>
                 <button onClick={this.onClose}>Отмена</button>

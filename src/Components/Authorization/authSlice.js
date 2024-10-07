@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { promise_10, promise_11, first, second, basic } from "../func_for_propmises";
+import { promise_10, 
+  //  promise_11, 
+   // first, 
+  //  second, 
+    basic } from "../func_for_propmises";
 import Config from "../../config/config.js";
 
 const serverPath = Config.serverPath;
@@ -242,14 +246,15 @@ const options ={
            // state.errorMessagePassword = "";
         }
     },
-    extraReducers: {
-    [registerUser.pending]: (state, action) => {
+    extraReducers: (builder) => {
+        builder
+    .addCase(registerUser.pending, (state, action) => {
         state.isFetching = true;
         state.error = false;
         state.userMessage = 'Загрузка...';
         
-    },
-    [registerUser.fulfilled]: (state, action) => {
+    })
+    .addCase(registerUser.fulfilled, (state, action) => {
         state.isFetching = true;
          
        // console.log(action.payload);
@@ -276,22 +281,22 @@ const options ={
 
         }
        
-    },
+    })
     
-    [registerUser.rejected]: (state, action) => {
+    .addCase(registerUser.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.payload;
         state.errorMessage = 'Сервер временно недоступен';
         state.userMessage ='';
         console.log('bad request!')
-    },
-    [loginUser.pending]: (state, action) => {
+    })
+    .addCase(loginUser.pending, (state, action) => {
         state.isFetching = true;
         state.error = false;
         state.userMessage = 'Загрузка...';
         
-    },
-    [loginUser.fulfilled]: (state, action) => {
+    })
+    .addCase(loginUser.fulfilled, (state, action) => {
         state.isFetching = true;
          
        // console.log(action.payload);
@@ -326,57 +331,57 @@ const options ={
 
         }
        
-    },
+    })
     
-    [loginUser.rejected]: (state, action) => {
+    .addCase(loginUser.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.payload;
         state.errorMessage = 'Сервер временно недоступен';
         state.userMessage ='';
         console.log('bad request login!')
-    },
-    [logout.pending]: (state, action) => {
+    })
+    .addCase(logout.pending, (state, action) => {
         state.isFetching = true;
         state.error = false;
        
         
-    },
-    [logout.fulfilled]: (state, action) => {
+    })
+    .addCase(logout.fulfilled, (state, action) => {
         state.isFetching = true;
         console.log(action);
        // state.userMessage ='LOGOUT OK';
         localStorage.removeItem('token');
            
        
-    },
+    })
     
-    [logout.rejected]: (state, action) => {
+    .addCase(logout.rejected, (state, action) => {
         state.isFetching = false;
         state.error = action.payload;
       console.log(action);
         state.errorMessage = 'Сервер временно недоступен';
         state.userMessage ='';
         console.log('bad request logout!')
-    },
+    })
 
     //EXAMPLE!!!!!!!!!!!!!!!!!!!
-    [example84.pending]: (state, action) => {
+    .addCase(example84.pending, (state, action) => {
         console.log('LOAD 84!!!!!!!!!');
-        },
-    [example84.fulfilled]: (state, action) => {
+        })
+        .addCase(example84.fulfilled, (state, action) => {
         console.log('OK 84!!!!!!!!!');
-        },
-    [example84.rejected]: (state, action) => {
+        })
+        .addCase(example84.rejected, (state, action) => {
             console.log('BAD 84!!!!!!!!!');
-        },
+        })
         //REFRESH
-        [refreshToken.pending]: (state, action) => {
+        .addCase(refreshToken.pending, (state, action) => {
             state.isFetching = true;
             state.error = false;
             state.userMessage = 'Загрузка...';
             
-        },
-        [refreshToken.fulfilled]: (state, action) => {
+        })
+        .addCase(refreshToken.fulfilled, (state, action) => {
             state.isFetching = true;
              
            // console.log(action.payload);
@@ -412,15 +417,15 @@ const options ={
     
             }
            
-        },
+        })
         
-        [refreshToken.rejected]: (state, action) => {
+        .addCase(refreshToken.rejected, (state, action) => {
             state.isFetching = false;
             state.error = action.payload;
             state.errorMessage = 'Сервер временно недоступен';
             state.userMessage ='';
             console.log('bad request login!')
-        },    
+        })    
     }
     
 
