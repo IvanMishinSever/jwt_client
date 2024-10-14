@@ -1,10 +1,16 @@
 
 import { example84 } from './Authorization/authSlice';
 import React from 'react';
-//import { promise_10 } from './func_for_propmises';
+import { 
+   // promise_10,
+   basic,
+   basic2
+
+} 
+from './func_for_propmises';
 
  const Example1 = (props) => {
-    
+
     //dispatch example simple
    const  handleClick = () => {
         const {dispatch} = props;
@@ -13,8 +19,22 @@ import React from 'react';
 
         //dispatch promise 
    const  handleClick1 = () => {
-    const {dispatch} = props;
-           dispatch(example84());
+
+  /*  const  func1 = async(a) => {
+        try {
+            const result = await basic(a);
+            console.log(result);
+            return result;
+            } 
+        catch(e) {
+            console.log('CATCH ERROR -');
+            }
+    }
+            */
+//func1('hello hell');
+//basic('hello hell');
+basic2();
+
 }
 
 

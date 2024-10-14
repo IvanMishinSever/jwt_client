@@ -10,6 +10,23 @@ async function basic(a) {
      console.log(msg + "basic");
   
 }
+
+const justFunction = () => {
+    let t;
+    t = `i resolve after some words ererer- ${1}`;
+    //console.log(t);
+    return t;
+}
+
+async function basicSetTimeout(a) {
+   setTimeout(justFunction, 2000, a);
+
+}
+const promise_justFunction = new Promise(resolve => {
+    setTimeout(() => resolve(justFunction()), 2000)
+});
+
+
 async function first(a, b) {
     const msg1 = await(b);
     console.log(msg1 + "first");
@@ -33,4 +50,19 @@ async function second() {
     }
 }
 
-export  {promise_10, promise_11, first, second, basic};
+async function basic2() {
+    try {
+    // const msg3 = await basicSetTimeout('OMG');
+     const msg4 = await promise_justFunction();  
+    //const msg5 = await promise_10; 
+   // const msg2 = await basic(msg3);
+    const msg = await basic('hrenovo');
+    
+    //console.log(msg + "basic");
+    }
+    catch(e) {
+        console.log('CATCH ERROR IN FUNC -BASIC2');
+}
+ 
+}
+export  {promise_10, promise_11, first, second, basic, basic2};
